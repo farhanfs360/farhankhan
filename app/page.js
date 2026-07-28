@@ -89,6 +89,7 @@ const testimonials = [
 ];
 
 export default function HomePage() {
+  const [menuOpen, setMenuOpen] = useState(false);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const testimonial = testimonials[activeTestimonial];
 
@@ -109,11 +110,29 @@ export default function HomePage() {
           <a href="#" className="logo">
             FARHAN<span>*</span>
           </a>
-          <div className="nav-links">
-            <a href="#services">Services</a>
-            <a href="#portfolio">Portfolio</a>
-            <a href="#contact">Contact</a>
-            <a href="#about">About</a>
+          <button
+            type="button"
+            className="nav-toggle"
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={menuOpen}
+            aria-controls="nav-menu"
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            {menuOpen ? (
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                <path d="M5 5l14 14M19 5L5 19" />
+              </svg>
+            ) : (
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                <path d="M3 6h18M3 12h18M3 18h18" />
+              </svg>
+            )}
+          </button>
+          <div id="nav-menu" className={`nav-links${menuOpen ? ' open' : ''}`}>
+            <a href="#services" onClick={() => setMenuOpen(false)}>Services</a>
+            <a href="#portfolio" onClick={() => setMenuOpen(false)}>Portfolio</a>
+            <a href="#contact" onClick={() => setMenuOpen(false)}>Contact</a>
+            <a href="#about" onClick={() => setMenuOpen(false)}>About</a>
           </div>
         </div>
       </nav>
