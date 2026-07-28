@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const Arrow = ({ size = 22, ...props }) => (
   <svg
@@ -91,6 +91,27 @@ const testimonials = [
 export default function HomePage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
+
+  useEffect(() => {
+    const elements = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) {
+      elements.forEach((el) => el.classList.add('in'));
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -60px 0px' }
+    );
+    elements.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
   const testimonial = testimonials[activeTestimonial];
 
   const prevTestimonial = () =>
@@ -140,7 +161,7 @@ export default function HomePage() {
       {/* ---------- Hero ---------- */}
       <header className="hero" id="about">
         <div className="container hero-grid">
-          <div className="hero-copy">
+          <div className="hero-copy reveal reveal-left">
             <p className="hero-role">Web Developer</p>
             <h1 className="hero-name">Farhan Khan</h1>
             <div className="hero-underline" />
@@ -155,12 +176,12 @@ export default function HomePage() {
             </a>
           </div>
 
-          <div className="hero-photo">
+          <div className="hero-photo reveal reveal-scale" style={{ '--d': '0.15s' }}>
             <img src="/images/hero-portrait.svg" alt="Portrait of Farhan Khan" />
           </div>
 
           <div className="hero-stats">
-            <div>
+            <div className="reveal reveal-right" style={{ '--d': '0.25s' }}>
               <p className="stat-label">
                 Years of
                 <br />
@@ -168,7 +189,7 @@ export default function HomePage() {
               </p>
               <p className="stat-value">16+</p>
             </div>
-            <div>
+            <div className="reveal reveal-right" style={{ '--d': '0.4s' }}>
               <p className="stat-label">
                 Complete
                 <br />
@@ -176,7 +197,7 @@ export default function HomePage() {
               </p>
               <p className="stat-value">500+</p>
             </div>
-            <div>
+            <div className="reveal reveal-right" style={{ '--d': '0.55s' }}>
               <p className="stat-label">Client</p>
               <p className="stat-value">200+</p>
             </div>
@@ -188,7 +209,7 @@ export default function HomePage() {
       <section className="brand-strip">
         <div className="container brand-inner">
           {/* Behance */}
-          <svg viewBox="0 0 140 40" role="img" aria-label="Behance">
+          <svg viewBox="0 0 140 40" role="img" aria-label="Behance" className="reveal">
             <text
               x="0"
               y="29"
@@ -201,7 +222,7 @@ export default function HomePage() {
             </text>
           </svg>
           {/* Dribbble */}
-          <svg viewBox="0 0 150 40" role="img" aria-label="Dribbble">
+          <svg viewBox="0 0 150 40" role="img" aria-label="Dribbble" className="reveal" style={{ '--d': '0.12s' }}>
             <circle cx="17" cy="20" r="12" fill="none" stroke="currentColor" strokeWidth="2.4" />
             <path
               d="M8 13c7 5 12 10 15 18M11 28c4-6 10-9 17-9M22 10c-2 7-2 13 1 19"
@@ -222,7 +243,7 @@ export default function HomePage() {
             </text>
           </svg>
           {/* Upwork */}
-          <svg viewBox="0 0 130 40" role="img" aria-label="Upwork">
+          <svg viewBox="0 0 130 40" role="img" aria-label="Upwork" className="reveal" style={{ '--d': '0.24s' }}>
             <text
               x="0"
               y="29"
@@ -235,7 +256,7 @@ export default function HomePage() {
             </text>
           </svg>
           {/* Fiverr */}
-          <svg viewBox="0 0 110 40" role="img" aria-label="Fiverr">
+          <svg viewBox="0 0 110 40" role="img" aria-label="Fiverr" className="reveal" style={{ '--d': '0.36s' }}>
             <text
               x="0"
               y="29"
@@ -253,7 +274,7 @@ export default function HomePage() {
       {/* ---------- Services ---------- */}
       <section className="services" id="services">
         <div className="container services-grid">
-          <div className="services-copy">
+          <div className="services-copy reveal reveal-left">
             <h2 className="section-title">
               My Awesome
               <br />
@@ -267,8 +288,13 @@ export default function HomePage() {
           </div>
 
           <div className="service-list">
-            {services.map((service) => (
-              <a key={service.title} href="#portfolio" className="service-card">
+            {services.map((service, i) => (
+              <a
+                key={service.title}
+                href="#portfolio"
+                className="service-card reveal reveal-right"
+                style={{ '--d': `${i * 0.15}s` }}
+              >
                 <img className="service-thumb" src={service.image} alt="" />
                 <div className="service-info">
                   <h3>{service.title}</h3>
@@ -285,7 +311,7 @@ export default function HomePage() {
       <section className="portfolio" id="portfolio">
         <div className="container">
           <div className="portfolio-panel">
-            <div className="portfolio-head">
+            <div className="portfolio-head reveal">
               <h2 className="section-title">Our Portofolio</h2>
               <a href="#portfolio" className="see-all">
                 See All
@@ -294,8 +320,13 @@ export default function HomePage() {
             </div>
 
             <div className="portfolio-grid">
-              {projects.map((project) => (
-                <a key={project.title} href="#portfolio" className="project-card">
+              {projects.map((project, i) => (
+                <a
+                  key={project.title}
+                  href="#portfolio"
+                  className="project-card reveal"
+                  style={{ '--d': `${(i % 3) * 0.12}s` }}
+                >
                   <div className="project-thumb">
                     <img src={project.image} alt={project.title} />
                   </div>
@@ -311,11 +342,11 @@ export default function HomePage() {
       {/* ---------- Testimonial ---------- */}
       <section className="testimonial">
         <div className="container testimonial-grid">
-          <div className="testimonial-photo">
+          <div className="testimonial-photo reveal reveal-left">
             <img src="/images/testimonial.svg" alt={`Photo of ${testimonial.name}`} />
           </div>
 
-          <div>
+          <div className="reveal reveal-right" style={{ '--d': '0.15s' }}>
             <svg
               className="quote-mark"
               width="52"
@@ -327,9 +358,11 @@ export default function HomePage() {
             >
               <path d="M0 40V24.6C0 10.8 6.9 2.6 20.6 0l2.8 6.2c-7.7 2.3-11.6 6.8-11.9 13.4H22V40H0Zm30 0V24.6C30 10.8 36.9 2.6 50.6 0l1.4 6.2c-7.7 2.3-11.6 6.8-11.9 13.4H52V40H30Z" />
             </svg>
-            <p className="testimonial-quote">{testimonial.quote}</p>
+            <p className="testimonial-quote quote-swap" key={`quote-${activeTestimonial}`}>
+              {testimonial.quote}
+            </p>
             <div className="testimonial-meta">
-              <div className="testimonial-author">
+              <div className="testimonial-author quote-swap" key={`author-${activeTestimonial}`}>
                 <strong>{testimonial.name}</strong>
                 <span>{testimonial.role}</span>
               </div>
@@ -354,14 +387,14 @@ export default function HomePage() {
       {/* ---------- CTA ---------- */}
       <section className="cta" id="contact">
         <div className="container cta-grid">
-          <div>
+          <div className="reveal reveal-left">
             <h2 className="cta-title">Want to make awesome and impactful Product?</h2>
             <a href="mailto:hello@farhankhan.dev" className="cta-link">
               Contact Us
               <Arrow />
             </a>
           </div>
-          <div className="cta-photo">
+          <div className="cta-photo reveal reveal-right" style={{ '--d': '0.15s' }}>
             <img src="/images/cta-laptop.svg" alt="Laptop showing design and development work" />
           </div>
         </div>
@@ -369,7 +402,7 @@ export default function HomePage() {
 
       {/* ---------- Footer ---------- */}
       <footer className="footer">
-        <div className="container">
+        <div className="container reveal">
           <h4>Follow us</h4>
           <div className="social-links">
             <a href="#" aria-label="Facebook">

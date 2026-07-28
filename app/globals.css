@@ -58,6 +58,32 @@ a {
   filter: blur(120px);
   pointer-events: none;
   z-index: 0;
+  animation: glow-drift 16s ease-in-out infinite alternate;
+}
+
+.glow-pink-right {
+  animation-duration: 20s;
+  animation-delay: -6s;
+}
+
+.glow-purple-bottom {
+  animation-duration: 24s;
+  animation-delay: -12s;
+}
+
+@keyframes glow-drift {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.85;
+  }
+  50% {
+    transform: translate(60px, -50px) scale(1.12);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-40px, 45px) scale(0.94);
+    opacity: 0.8;
+  }
 }
 
 .glow-purple-left {
@@ -559,6 +585,101 @@ a {
 
 .social-links a:hover {
   color: var(--gold);
+}
+
+/* ---------- Scroll-reveal animations ---------- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(34px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition-delay: var(--d, 0s);
+  will-change: opacity, transform;
+}
+
+.reveal-left {
+  transform: translateX(-44px);
+}
+
+.reveal-right {
+  transform: translateX(44px);
+}
+
+.reveal-scale {
+  transform: translateY(24px) scale(0.94);
+}
+
+.reveal.in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Hero underline draws in after the copy reveals */
+
+.hero-underline {
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) 0.45s;
+}
+
+.reveal.in .hero-underline {
+  transform: scaleX(1);
+}
+
+/* Gentle float on the hero photo once revealed */
+
+.hero-photo.in img {
+  animation: gentle-float 7s ease-in-out 1.2s infinite;
+}
+
+@keyframes gentle-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Testimonial slide change */
+
+.quote-swap {
+  animation: quote-in 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+@keyframes quote-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Respect reduced-motion preferences */
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .hero-underline {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .glow,
+  .hero-photo.in img,
+  .quote-swap {
+    animation: none;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 /* ---------- Responsive ---------- */
