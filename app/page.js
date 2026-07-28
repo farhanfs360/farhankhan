@@ -2,216 +2,390 @@
 
 import { useState } from 'react';
 
-export default function HomePage() {
-  const [status, setStatus] = useState('');
+const Arrow = ({ size = 22, ...props }) => (
+  <svg
+    width={size}
+    height={size * 0.55}
+    viewBox="0 0 22 12"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <path
+      d="M1 6h19M15 1l5 5-5 5"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setStatus('Thanks! Your message has been received.');
-    event.currentTarget.reset();
-  };
+const ArrowLeft = (props) => (
+  <svg
+    width="22"
+    height="12"
+    viewBox="0 0 22 12"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <path
+      d="M21 6H2M7 1L2 6l5 5"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+const services = [
+  {
+    title: 'WordPress Projects',
+    subtitle: '280+ Project',
+    image: '/images/service-wordpress.svg',
+  },
+  {
+    title: 'Shopify Theme Coding',
+    subtitle: '76+ Project',
+    image: '/images/service-shopify.svg',
+  },
+  {
+    title: 'Vibe Coding',
+    subtitle: 'ReactJS | NextJS',
+    image: '/images/service-vibe.svg',
+  },
+];
+
+const projects = [
+  { title: 'VPN Mobile App', category: 'Mobile App', image: '/images/project-1.svg' },
+  { title: 'Streaming Mobile App', category: 'Mobile App', image: '/images/project-2.svg' },
+  { title: 'Creative Digital Agency', category: 'Landing Page', image: '/images/project-3.svg' },
+  { title: 'Podcast Mobile App', category: 'Mobile App', image: '/images/project-4.svg' },
+  { title: 'Multimedia Design Platform', category: 'Web Design', image: '/images/project-5.svg' },
+  { title: 'Parking Mobile App', category: 'Mobile App', image: '/images/project-6.svg' },
+];
+
+const testimonials = [
+  {
+    quote:
+      'Stefan is a profesional worker who always gives resuslts that are beyond our expectacions, thanks for your services',
+    name: 'Jasmin',
+    role: 'Businessman',
+  },
+  {
+    quote:
+      'Working with Farhan was seamless from start to finish. He delivered our project ahead of schedule with outstanding quality',
+    name: 'Michael',
+    role: 'Startup Founder',
+  },
+  {
+    quote:
+      'Our online store has never performed better. Communication was clear and every request was handled quickly',
+    name: 'Sarah',
+    role: 'Store Owner',
+  },
+];
+
+export default function HomePage() {
+  const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const testimonial = testimonials[activeTestimonial];
+
+  const prevTestimonial = () =>
+    setActiveTestimonial((i) => (i - 1 + testimonials.length) % testimonials.length);
+  const nextTestimonial = () =>
+    setActiveTestimonial((i) => (i + 1) % testimonials.length);
 
   return (
-    <>
-      <header className="hero">
+    <div className="page">
+      <span className="glow glow-purple-left" aria-hidden="true" />
+      <span className="glow glow-pink-right" aria-hidden="true" />
+      <span className="glow glow-purple-bottom" aria-hidden="true" />
+
+      {/* ---------- Navigation ---------- */}
+      <nav className="site-nav">
+        <div className="container nav-inner">
+          <a href="#" className="logo">
+            FARHAN<span>*</span>
+          </a>
+          <div className="nav-links">
+            <a href="#services">Services</a>
+            <a href="#portfolio">Portfolio</a>
+            <a href="#contact">Contact</a>
+            <a href="#about">About</a>
+          </div>
+        </div>
+      </nav>
+
+      {/* ---------- Hero ---------- */}
+      <header className="hero" id="about">
         <div className="container hero-grid">
           <div className="hero-copy">
-            <p className="eyebrow">Personal Portfolio</p>
-            <h1>Hi, I'm Farhan</h1>
+            <p className="hero-role">Web Developer</p>
+            <h1 className="hero-name">Farhan Khan</h1>
+            <div className="hero-underline" />
             <p>
-              I build clean, engaging web experiences using HTML, CSS, and
-              JavaScript. I specialize in frontend design, product-led
-              development, and creating websites that feel polished and perform
-              smoothly.
+              Eget malesuada tortor ut sed. Tincidunt viverra malesuada nisl
+              vehicula vestibulum. Ut blandit fermentum, cursus nulla. Imperdiet
+              neque mi convallis quis interdum sagittis.
             </p>
-            <div className="hero-actions">
-              <a className="btn btn-primary" href="#projects">
-                View Projects
-              </a>
-              <a className="btn btn-secondary" href="#contact">
-                Let's Talk
-              </a>
-            </div>
+            <a href="#contact" className="link-arrow">
+              Let&apos;s talk
+              <Arrow />
+            </a>
           </div>
-          <div className="hero-card">
-            <div className="hero-card-inner">
-              <h2>Professional Snapshot</h2>
-              <ul>
-                <li>
-                  <strong>Role:</strong> Frontend Developer
-                </li>
-                <li>
-                  <strong>Experience:</strong> 5+ years
-                </li>
-                <li>
-                  <strong>Focus:</strong> Responsive Web Apps
-                </li>
-                <li>
-                  <strong>Tools:</strong> HTML, CSS, JavaScript
-                </li>
-              </ul>
+
+          <div className="hero-photo">
+            <img src="/images/hero-portrait.svg" alt="Portrait of Farhan Khan" />
+          </div>
+
+          <div className="hero-stats">
+            <div>
+              <p className="stat-label">
+                Years of
+                <br />
+                Experience
+              </p>
+              <p className="stat-value">16+</p>
+            </div>
+            <div>
+              <p className="stat-label">
+                Complete
+                <br />
+                Project
+              </p>
+              <p className="stat-value">500+</p>
+            </div>
+            <div>
+              <p className="stat-label">Client</p>
+              <p className="stat-value">200+</p>
             </div>
           </div>
         </div>
       </header>
 
-      <nav className="site-nav">
-        <div className="container nav-inner">
-          <a href="#about">About</a>
-          <a href="#experience">Experience</a>
-          <a href="#projects">Portfolio</a>
-          <a href="#contact">Contact</a>
+      {/* ---------- Brand strip ---------- */}
+      <section className="brand-strip">
+        <div className="container brand-inner">
+          {/* Behance */}
+          <svg viewBox="0 0 140 40" role="img" aria-label="Behance">
+            <text
+              x="0"
+              y="29"
+              fontFamily="Georgia, serif"
+              fontSize="26"
+              fontWeight="700"
+              fill="currentColor"
+            >
+              Bēhance
+            </text>
+          </svg>
+          {/* Dribbble */}
+          <svg viewBox="0 0 150 40" role="img" aria-label="Dribbble">
+            <circle cx="17" cy="20" r="12" fill="none" stroke="currentColor" strokeWidth="2.4" />
+            <path
+              d="M8 13c7 5 12 10 15 18M11 28c4-6 10-9 17-9M22 10c-2 7-2 13 1 19"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.6"
+            />
+            <text
+              x="36"
+              y="28"
+              fontFamily="'Segoe Script', 'Brush Script MT', cursive"
+              fontSize="21"
+              fontStyle="italic"
+              fontWeight="600"
+              fill="currentColor"
+            >
+              dribbble
+            </text>
+          </svg>
+          {/* Upwork */}
+          <svg viewBox="0 0 130 40" role="img" aria-label="Upwork">
+            <text
+              x="0"
+              y="29"
+              fontFamily="Verdana, sans-serif"
+              fontSize="25"
+              fontWeight="700"
+              fill="currentColor"
+            >
+              upwork
+            </text>
+          </svg>
+          {/* Fiverr */}
+          <svg viewBox="0 0 110 40" role="img" aria-label="Fiverr">
+            <text
+              x="0"
+              y="29"
+              fontFamily="Arial, sans-serif"
+              fontSize="26"
+              fontWeight="700"
+              fill="currentColor"
+            >
+              fiverr
+            </text>
+          </svg>
         </div>
-      </nav>
+      </section>
 
-      <main>
-        <section id="about" className="section container">
-          <div className="section-header">
-            <p className="section-label">About Me</p>
-            <h2>Detail-driven design and development</h2>
+      {/* ---------- Services ---------- */}
+      <section className="services" id="services">
+        <div className="container services-grid">
+          <div className="services-copy">
+            <h2 className="section-title">
+              My Awesome
+              <br />
+              Service
+            </h2>
+            <p>
+              Eget malesuada tortor ut sed. Tincidunt viverra malesuada nisl
+              vehicula vestibulum. Ut blandit fermentum, cursus nulla. Imperdiet
+              neque mi convallis quis interdum sagittis.
+            </p>
           </div>
-          <p>
-            I create user-friendly websites with a focus on performance,
-            accessibility, and modern styling. My process balances strong
-            visuals, clear messaging, and clean code so every project looks
-            great and works reliably across devices.
-          </p>
-          <div className="stats-grid">
-            <div className="stat-card">
-              <h3>50+</h3>
-              <p>Web pages launched</p>
-            </div>
-            <div className="stat-card">
-              <h3>15</h3>
-              <p>Completed client projects</p>
-            </div>
-            <div className="stat-card">
-              <h3>100%</h3>
-              <p>Responsive builds</p>
-            </div>
-          </div>
-        </section>
 
-        <section id="experience" className="section section-alt container">
-          <div className="section-header">
-            <p className="section-label">Experience</p>
-            <h2>Recent work roles</h2>
+          <div className="service-list">
+            {services.map((service) => (
+              <a key={service.title} href="#portfolio" className="service-card">
+                <img className="service-thumb" src={service.image} alt="" />
+                <div className="service-info">
+                  <h3>{service.title}</h3>
+                  <p>{service.subtitle}</p>
+                </div>
+                <Arrow />
+              </a>
+            ))}
           </div>
-          <div className="timeline">
-            <article className="timeline-item">
-              <span className="timeline-date">Aug 2024 – Present</span>
-              <h3>Sr. Developer - WordPress / Shopify and Web Project Manager</h3>
-              <p>Scepter Marketing (USA) - Full Time</p>
-              <p>
-                WordPress website development and maintenance. Shopify 2.0
-                development and store setup. Bootstrap framework coding
-                (HTML/CSS/JS). Liquid coding for Shopify templates.
-              </p>
-            </article>
-            <article className="timeline-item">
-              <span className="timeline-date">Oct 2024 – July 2025</span>
-              <h3>Sr. WordPress / Shopify Developer</h3>
-              <p>
-                Xntric by LPS Brands (UAE) -{' '}
-                <a href="https://lps-me.com/" target="_blank" rel="noreferrer">
-                  lps-me.com
+        </div>
+      </section>
+
+      {/* ---------- Portfolio ---------- */}
+      <section className="portfolio" id="portfolio">
+        <div className="container">
+          <div className="portfolio-panel">
+            <div className="portfolio-head">
+              <h2 className="section-title">Our Portofolio</h2>
+              <a href="#portfolio" className="see-all">
+                See All
+                <Arrow />
+              </a>
+            </div>
+
+            <div className="portfolio-grid">
+              {projects.map((project) => (
+                <a key={project.title} href="#portfolio" className="project-card">
+                  <div className="project-thumb">
+                    <img src={project.image} alt={project.title} />
+                  </div>
+                  <h3>{project.title}</h3>
+                  <p>{project.category}</p>
                 </a>
-              </p>
-              <p>
-                WordPress website development and maintenance. Shopify
-                development and store setup using Liquid. Bootstrap framework
-                coding. Elementor Pro development and Webflow website work.
-              </p>
-            </article>
-            <article className="timeline-item">
-              <span className="timeline-date">Feb 2020 – Sept 2024</span>
-              <h3>WordPress / Shopify Developer</h3>
-              <p>FullStop (USA/UK) - Full-time</p>
-              <p>
-                Developed and maintained WordPress and Shopify sites, ensuring
-                responsive layouts, performance, and platform-specific
-                customizations.
-              </p>
-            </article>
-          </div>
-        </section>
-
-        <section id="projects" className="section container">
-          <div className="section-header">
-            <p className="section-label">Portfolio</p>
-            <h2>Selected projects</h2>
-          </div>
-          <div className="project-grid">
-            <article className="project-card">
-              <h3>Brand Refresh Site</h3>
-              <p>
-                Designed and built a modern portfolio website with custom
-                animations, responsive layout, and fast load times.
-              </p>
-              <span className="project-tag">UI / UX / Web Dev</span>
-            </article>
-            <article className="project-card">
-              <h3>Product Landing Page</h3>
-              <p>
-                Created a polished landing page for a product launch, including
-                conversion-focused sections and mobile-first structure.
-              </p>
-              <span className="project-tag">Marketing / Performance</span>
-            </article>
-            <article className="project-card">
-              <h3>Dashboard Prototype</h3>
-              <p>
-                Built a dashboard prototype with clean data cards, responsive
-                tables, and intuitive interactions using only vanilla JS.
-              </p>
-              <span className="project-tag">Dashboard / JavaScript</span>
-            </article>
-          </div>
-        </section>
-
-        <section id="contact" className="section section-alt container">
-          <div className="section-header">
-            <p className="section-label">Contact</p>
-            <h2>Let's build something together</h2>
-          </div>
-          <div className="contact-grid">
-            <div className="contact-copy">
-              <p>
-                If you're looking for a developer to improve your website or
-                launch a new project, send a message and I will reply promptly.
-              </p>
-              <ul>
-                <li>
-                  <strong>Email:</strong> hello@example.com
-                </li>
-                <li>
-                  <strong>Location:</strong> Remote / Worldwide
-                </li>
-              </ul>
+              ))}
             </div>
-            <form onSubmit={handleSubmit} className="contact-form">
-              <label htmlFor="name">Name</label>
-              <input type="text" id="name" name="name" placeholder="Your name" required />
-
-              <label htmlFor="email">Email</label>
-              <input type="email" id="email" name="email" placeholder="you@example.com" required />
-
-              <label htmlFor="message">Message</label>
-              <textarea id="message" name="message" rows="5" placeholder="Tell me about your project" />
-
-              <button type="submit">Send Message</button>
-              <p className="form-status" aria-live="polite">{status}</p>
-            </form>
           </div>
-        </section>
-      </main>
+        </div>
+      </section>
 
-      <footer className="site-footer">
-        <div className="container footer-inner">
-          <p>© 2026 Farhan. Built with Next.js.</p>
-          <p>Open-source portfolio for web deployment.</p>
+      {/* ---------- Testimonial ---------- */}
+      <section className="testimonial">
+        <div className="container testimonial-grid">
+          <div className="testimonial-photo">
+            <img src="/images/testimonial.svg" alt={`Photo of ${testimonial.name}`} />
+          </div>
+
+          <div>
+            <svg
+              className="quote-mark"
+              width="52"
+              height="40"
+              viewBox="0 0 52 40"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              <path d="M0 40V24.6C0 10.8 6.9 2.6 20.6 0l2.8 6.2c-7.7 2.3-11.6 6.8-11.9 13.4H22V40H0Zm30 0V24.6C30 10.8 36.9 2.6 50.6 0l1.4 6.2c-7.7 2.3-11.6 6.8-11.9 13.4H52V40H30Z" />
+            </svg>
+            <p className="testimonial-quote">{testimonial.quote}</p>
+            <div className="testimonial-meta">
+              <div className="testimonial-author">
+                <strong>{testimonial.name}</strong>
+                <span>{testimonial.role}</span>
+              </div>
+              <div className="testimonial-nav">
+                <button type="button" aria-label="Previous testimonial" onClick={prevTestimonial}>
+                  <ArrowLeft />
+                </button>
+                <button
+                  type="button"
+                  className="active"
+                  aria-label="Next testimonial"
+                  onClick={nextTestimonial}
+                >
+                  <Arrow />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ---------- CTA ---------- */}
+      <section className="cta" id="contact">
+        <div className="container cta-grid">
+          <div>
+            <h2 className="cta-title">Want to make awesome and impactful Product?</h2>
+            <a href="mailto:hello@farhankhan.dev" className="cta-link">
+              Contact Us
+              <Arrow />
+            </a>
+          </div>
+          <div className="cta-photo">
+            <img src="/images/cta-laptop.svg" alt="Laptop showing design and development work" />
+          </div>
+        </div>
+      </section>
+
+      {/* ---------- Footer ---------- */}
+      <footer className="footer">
+        <div className="container">
+          <h4>Follow us</h4>
+          <div className="social-links">
+            <a href="#" aria-label="Facebook">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                <path d="M14 3h-2.5A3.5 3.5 0 0 0 8 6.5V9H5.5v3.5H8V21h3.5v-8.5H14L14.8 9h-3.3V6.8c0-.7.3-1.3 1.3-1.3H15V3h-1Z" />
+              </svg>
+            </a>
+            <a href="#" aria-label="Instagram">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                <rect x="3" y="3" width="18" height="18" rx="5" />
+                <circle cx="12" cy="12" r="4.2" />
+                <circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none" />
+              </svg>
+            </a>
+            <a href="#" aria-label="LinkedIn">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                <rect x="3" y="3" width="18" height="18" rx="3" />
+                <path d="M7.5 10.5V17M7.5 7.3v.2M11.5 17v-4a2.3 2.3 0 0 1 4.6 0v4" />
+              </svg>
+            </a>
+            <a href="#" aria-label="Dribbble">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                <circle cx="12" cy="12" r="9" />
+                <path d="M5.5 6.5c5 3.5 8.5 7.5 10.5 13.5M7.5 19c3-4.5 7.5-6.5 13-6M17 5c-1.5 5-1.5 9.5.5 14" />
+              </svg>
+            </a>
+            <a href="mailto:hello@farhankhan.dev" aria-label="Email">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                <rect x="3" y="5" width="18" height="14" rx="2" />
+                <path d="m4 7 8 6 8-6" />
+              </svg>
+            </a>
+          </div>
         </div>
       </footer>
-    </>
+    </div>
   );
 }
