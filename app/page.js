@@ -166,9 +166,10 @@ export default function HomePage() {
             <h1 className="hero-name">Farhan Khan</h1>
             <div className="hero-underline" />
             <p>
-              Eget malesuada tortor ut sed. Tincidunt viverra malesuada nisl
-              vehicula vestibulum. Ut blandit fermentum, cursus nulla. Imperdiet
-              neque mi convallis quis interdum sagittis.
+              As a Senior Lead Developer at Scepter Marketing USA, I drive the development of high-performing WordPress and Shopify solutions tailored to client needs. My expertise spans creating custom themes, optimizing eCommerce platforms, enhancing user experiences, and ensuring seamless project execution from planning to launch. With over 12 years in web development, I manage cross-functional teams, lead front-end development initiatives, and collaborate closely with clients to deliver digital solutions that align with their brand vision and business objectives. My contributions have directly supported client growth, improved website performance, and strengthened long-term partnerships.
+</p>
+<p>
+Previously, at LPS Brands, I played a key role in delivering innovative WordPress and Shopify solutions that elevated the company’s digital presence. I contributed to the successful rollout of multiple high-impact projects, improved site performance, and enhanced customer retention through strategic design and development. My work involved project management, front-end development, and cross-team collaboration to achieve high-quality, goal-driven outcomes.
             </p>
             <a href="#contact" className="link-arrow">
               Let&apos;s talk
