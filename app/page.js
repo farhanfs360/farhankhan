@@ -324,7 +324,7 @@ export default function HomePage() {
           </div>
 
           <div className="hero-photo reveal reveal-right" style={{ '--d': '0.15s' }}>
-            <img src="/images/portrait.svg" alt="Portrait of Farhan Khan" />
+            <img src="/images/portrait.png" alt="Portrait of Farhan Khan" />
           </div>
         </div>
       </header>
@@ -333,7 +333,7 @@ export default function HomePage() {
       <section className="about" id="about">
         <div className="container about-grid">
           <div className="about-photo reveal reveal-left">
-            <img src="/images/about.svg" alt="Farhan Khan at his workstation" />
+            <img src="/images/about.png" alt="Farhan Khan at his workstation" />
           </div>
           <div className="reveal reveal-right" style={{ '--d': '0.12s' }}>
             <p className="about-kicker">About Me</p>
