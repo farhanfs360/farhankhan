@@ -9,9 +9,9 @@
   --text: #eceef2;
   --muted: #9a9aa5;
   --muted-2: #6f6f7a;
-  --accent: #ec1552;
-  --accent-soft: rgba(236, 21, 82, 0.12);
-  --accent-glow: rgba(236, 21, 82, 0.35);
+  --accent: #00a2ff;
+  --accent-soft: rgba(0, 162, 255, 0.12);
+  --accent-glow: rgba(0, 162, 255, 0.35);
   --radius: 14px;
   --font: 'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
@@ -131,10 +131,17 @@ button {
 }
 
 .logo {
+  font-family: 'Kalam', 'Comic Sans MS', cursive;
   font-weight: 700;
-  font-size: 20px;
-  color: var(--accent);
+  font-style: italic;
+  font-size: 24px;
+  color: #c7c7cf;
+  letter-spacing: 0.02em;
   white-space: nowrap;
+}
+
+.logo .accent {
+  color: var(--accent);
 }
 
 .nav-links {
@@ -264,11 +271,97 @@ button {
   margin-bottom: 30px;
 }
 
-.hero-actions {
-  display: flex;
-  flex-wrap: wrap;
+.scroll-indicator {
+  display: inline-flex;
+  align-items: center;
   gap: 16px;
   margin-bottom: 34px;
+  color: var(--muted);
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+
+.scroll-indicator:hover {
+  color: var(--accent);
+  transform: translateY(4px);
+}
+
+.mouse {
+  width: 26px;
+  height: 42px;
+  border: 2px solid currentColor;
+  border-radius: 16px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.wheel {
+  position: absolute;
+  left: 50%;
+  top: 7px;
+  width: 4px;
+  height: 8px;
+  margin-left: -2px;
+  border-radius: 2px;
+  background: currentColor;
+  animation: wheel-scroll 1.6s ease-in-out infinite;
+}
+
+@keyframes wheel-scroll {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  70% {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+}
+
+.chevrons {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.chevrons span {
+  width: 9px;
+  height: 9px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  animation: chevron-pulse 1.6s ease-in-out infinite;
+}
+
+.chevrons span:nth-child(2) {
+  animation-delay: 0.25s;
+}
+
+@keyframes chevron-pulse {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.scroll-text {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wheel,
+  .chevrons span {
+    animation: none;
+  }
 }
 
 .social-row {
@@ -403,7 +496,7 @@ button {
   justify-content: center;
   color: var(--accent);
   background: var(--accent-soft);
-  border: 1px solid rgba(236, 21, 82, 0.3);
+  border: 1px solid rgba(0, 162, 255, 0.3);
 }
 
 .service-card h3 {
@@ -440,47 +533,115 @@ button {
 
 .timeline {
   position: relative;
-  padding-left: 26px;
-  border-left: 2px solid var(--line);
-  display: grid;
-  gap: 26px;
+  border-right: 1px solid rgba(0, 162, 255, 0.55);
+  padding-right: 28px;
 }
 
-.timeline-item {
+.acc-item {
   position: relative;
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 22px 24px;
+  border-top: 1px solid rgba(0, 162, 255, 0.55);
 }
 
-.timeline-item::before {
-  content: '';
+.acc-item:last-child {
+  border-bottom: 1px solid rgba(0, 162, 255, 0.55);
+}
+
+.acc-marker {
   position: absolute;
-  left: -34px;
-  top: 28px;
-  width: 12px;
-  height: 12px;
+  right: -40px;
+  top: -13px;
+  z-index: 2;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 0 5px var(--accent-soft);
+  border: 1px solid var(--accent);
+  background: var(--bg-soft);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
+  padding: 0;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
-.timeline-item h4 {
+.acc-marker:hover {
+  background: var(--accent);
+  color: #fff;
+  transform: scale(1.08);
+}
+
+.acc-head {
+  width: 100%;
+  background: none;
+  border: 0;
+  color: var(--text);
+  text-align: left;
+  padding: 18px 8px 18px 2px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.acc-head h4 {
   font-size: 17px;
+  font-weight: 700;
+  line-height: 1.4;
+  transition: color 0.2s ease;
+}
+
+.acc-head:hover h4 {
+  color: var(--accent);
+}
+
+.acc-sub {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.acc-role {
+  font-style: italic;
+  font-size: 14px;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.acc-date {
+  font-style: italic;
+  font-size: 13.5px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.acc-date .present {
+  color: var(--accent);
   font-weight: 600;
 }
 
-.timeline-item .tl-sub {
-  color: var(--accent);
-  font-size: 13.5px;
-  font-weight: 500;
-  margin: 4px 0 10px;
+.acc-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s ease;
 }
 
-.timeline-item p {
+.acc-body.open {
+  grid-template-rows: 1fr;
+}
+
+.acc-body > div {
+  overflow: hidden;
+}
+
+.acc-body p {
   color: var(--muted);
   font-size: 14.5px;
+  padding: 0 8px 20px 2px;
 }
 
 /* ---------- skills ---------- */
@@ -511,15 +672,17 @@ button {
 
 .skill-icon {
   width: 56px;
-  height: 56px;
+  height: 62px;
   margin: 0 auto 14px;
-  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 800;
-  font-size: 19px;
-  color: #0c0c0f;
+}
+
+.skill-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .skill-card p {
@@ -707,6 +870,16 @@ button {
   color: var(--accent);
   font-weight: 600;
   font-size: 14.5px;
+}
+
+.form-sent.form-error {
+  color: #ff5b5b;
+}
+
+.btn:disabled {
+  opacity: 0.65;
+  cursor: default;
+  transform: none;
 }
 
 /* ---------- footer ---------- */

@@ -60,12 +60,9 @@ const icons = {
   arrowUp: <path d="M12 19V5m-6 6 6-6 6 6" />,
   send: <path d="m3 11 18-8-8 18-2.5-7.5L3 11Z" />,
   download: <path d="M12 4v11m-5-4 5 5 5-5M5 20h14" />,
-  facebook: <path d="M14 3h-2.5A3.5 3.5 0 0 0 8 6.5V9H5.5v3.5H8V21h3.5v-8.5H14L14.8 9h-3.3V6.8c0-.7.3-1.3 1.3-1.3H15V3h-1Z" />,
-  instagram: (
+  behance: (
     <>
-      <rect x="3" y="3" width="18" height="18" rx="5" />
-      <circle cx="12" cy="12" r="4.2" />
-      <circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none" />
+      <path d="M3 6.5h4.6a2.6 2.6 0 0 1 1.6 4.6A2.9 2.9 0 0 1 7.8 16H3V6.5ZM3 11h4.4M14 9h5M16.5 10.5a3.3 3.3 0 0 1 3.3 3.6h-6.6a3.3 3.3 0 0 0 5.9 2" />
     </>
   ),
   linkedin: (
@@ -133,41 +130,72 @@ const services = [
 const education = [
   {
     title: 'Aptech AMSP Specialize',
-    sub: 'Software Development · 2010 – 2013',
-    text: 'Diligently attended software development courses, advancing skills and knowledge. With this being a continuous improvement, I get to work to contribute effectively in software development roles.',
+    role: 'Software Development',
+    date: '2010 - 2013',
+    desc: 'Diligently attended software development courses, advancing skills and knowledge. With this being a continuous improvement, got to learn to contribute effectively in software development roles.',
   },
   {
-    title: 'Karachi University of Science and Technology (UoK)',
-    sub: 'Graduate · 2009',
-    text: 'Completed graduation building a strong academic foundation for a career in software and web development.',
+    title: 'Graduate 2009 - Karachi University of Science and Technology (UoK)',
   },
 ];
 
 const experience = [
   {
-    title: 'Scepter Marketing · USA',
-    sub: 'Web Developer | WordPress | Shopify · August 2024 – Present',
-    text: 'Create web applications that maintain high standards of code quality and smart application design to ensure optimal performance, uptime, and scale.',
+    title: 'Scepter Marketing - USA',
+    role: 'Web Developer | WordPress | Shopify',
+    date: 'August 2024 -',
+    present: true,
+    desc: 'Create of web applications that maintains high standards of code quality and smart application design to ensure application performance, uptime, and scale.',
   },
-  { title: 'FullStep 360 · USA', sub: 'Web Developer', text: '' },
-  { title: 'LPS Brands · Dubai / UAE', sub: 'Web Developer', text: '' },
-  { title: 'Go4Web Tech', sub: 'Web Developer', text: '' },
-  { title: 'Premiersoft Technologies', sub: 'Web Developer', text: '' },
-  { title: 'Korean Kenya Solar Limited', sub: 'Web Developer', text: '' },
-  { title: 'Web Cloud Ltd', sub: 'Web Developer', text: '' },
+  {
+    title: 'FullStop 360 - USA',
+    role: 'Web Developer | WordPress | Shopify',
+    date: '2022 - 2024',
+    desc: 'Developed and maintained custom WordPress and Shopify builds for US-based clients, delivering responsive, SEO-friendly websites and collaborating with design teams to ship pixel-perfect front-ends.',
+  },
+  {
+    title: 'LPS Brands - Dubai / UAE',
+    role: 'Web Developer | WordPress | Shopify',
+    date: '2019 - 2022',
+    desc: 'Played a key role in delivering innovative WordPress and Shopify solutions that elevated the company’s digital presence. Contributed to the successful rollout of multiple high-impact projects, improved site performance, and enhanced customer retention through strategic design and development.',
+  },
+  {
+    title: 'Go4Web Tech',
+    role: 'Web Developer',
+    date: '2016 - 2019',
+    desc: 'Built dynamic, client-focused websites and web applications, translating business requirements into clean, maintainable code and reliable deployments.',
+  },
+  {
+    title: 'Premiersoft Technologies',
+    role: 'Front-End Developer',
+    date: '2014 - 2016',
+    desc: 'Developed responsive front-end interfaces and custom themes, improving usability and cross-browser performance across a wide range of client projects.',
+  },
+  {
+    title: 'Korean Kenya Solar Limited',
+    role: 'Web Developer',
+    date: '2012 - 2014',
+    desc: 'Designed and maintained the company’s web presence, delivering informative, easy-to-manage pages that supported marketing and business development goals.',
+  },
+  {
+    title: 'Web Cloud Ltd',
+    role: 'Junior Web Developer',
+    date: '2010 - 2012',
+    desc: 'Started my professional journey building and maintaining client websites, gaining hands-on experience with PHP, WordPress, and modern front-end fundamentals.',
+  },
 ];
 
 const skills = [
-  { name: 'Javascript', glyph: 'JS', color: '#f7df1e' },
-  { name: 'Typescript', glyph: 'TS', color: '#3178c6' },
-  { name: 'WordPress', glyph: 'W', color: '#21759b' },
-  { name: 'PHP', glyph: 'php', color: '#777bb3' },
-  { name: 'Next.Js', glyph: 'N', color: '#e4e4e7' },
-  { name: 'Shopify', glyph: 'S', color: '#95bf47' },
-  { name: 'Tailwind CSS', glyph: 'tw', color: '#38bdf8' },
-  { name: 'Bootstrap', glyph: 'B', color: '#7952b3' },
-  { name: 'jQuery', glyph: 'jQ', color: '#0769ad' },
-  { name: 'Figma', glyph: 'F', color: '#f24e1e' },
+  { name: 'Javascript', image: '/images/JS.svg' },
+  { name: 'Typescript', image: '/images/Typescript.svg' },
+  { name: 'WordPress', image: '/images/wordpress.svg' },
+  { name: 'PHP', image: '/images/Php.svg' },
+  { name: 'Next.Js', image: '/images/nextjs.svg' },
+  { name: 'Shopify', image: '/images/shopify.svg' },
+  { name: 'Tailwind CSS', image: '/images/tailwindcss.svg' },
+  { name: 'Bootstrap', image: '/images/bootstrap.svg' },
+  { name: 'jQuery', image: '/images/jquery.svg' },
+  { name: 'Figma', image: '/images/figma.svg' },
 ];
 
 const projects = [
@@ -212,18 +240,67 @@ const contactPoints = [
 ];
 
 const socials = [
-  { icon: 'facebook', label: 'Facebook', href: '#' },
-  { icon: 'instagram', label: 'Instagram', href: '#' },
-  { icon: 'linkedin', label: 'LinkedIn', href: '#' },
-  { icon: 'github', label: 'GitHub', href: '#' },
-  { icon: 'mail', label: 'Email', href: 'mailto:hello@farhankhan.dev' },
+  { icon: 'github', label: 'GitHub', href: 'https://github.com/farhanfs360' },
+  { icon: 'behance', label: 'Behance', href: 'https://www.behance.net/farhankhan' },
+  { icon: 'linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/in/farhan83/' },
 ];
+
+/* ---------- resume accordion ---------- */
+
+function TimelineAccordion({ items, idPrefix, open, onToggle }) {
+  return (
+    <div className="timeline">
+      {items.map((item, i) => {
+        const isOpen = open === i;
+        const bodyId = `${idPrefix}-body-${i}`;
+        return (
+          <div key={item.title} className="acc-item">
+            <button
+              type="button"
+              className="acc-marker"
+              tabIndex={-1}
+              aria-hidden="true"
+              onClick={() => onToggle(isOpen ? -1 : i)}
+            >
+              {isOpen ? '−' : '+'}
+            </button>
+            <button
+              type="button"
+              className="acc-head"
+              aria-expanded={isOpen}
+              aria-controls={bodyId}
+              onClick={() => onToggle(isOpen ? -1 : i)}
+            >
+              <h4>{item.title}</h4>
+              {item.role || item.date ? (
+                <span className="acc-sub">
+                  {item.role ? <span className="acc-role">{item.role}</span> : <span />}
+                  {item.date ? (
+                    <span className="acc-date">
+                      {item.date}
+                      {item.present ? <span className="present"> PRESENT</span> : null}
+                    </span>
+                  ) : null}
+                </span>
+              ) : null}
+            </button>
+            <div id={bodyId} className={`acc-body${isOpen ? ' open' : ''}`}>
+              <div>{item.desc ? <p>{item.desc}</p> : null}</div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
 
 /* ---------- page ---------- */
 
 export default function HomePage() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [sent, setSent] = useState(false);
+  const [formStatus, setFormStatus] = useState('idle'); // idle | sending | sent | error
+  const [openEdu, setOpenEdu] = useState(0);
+  const [openExp, setOpenExp] = useState(0);
 
   useEffect(() => {
     const elements = document.querySelectorAll('.reveal');
@@ -246,10 +323,29 @@ export default function HomePage() {
     return () => observer.disconnect();
   }, []);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    setSent(true);
-    event.target.reset();
+    const form = event.target;
+    setFormStatus('sending');
+    try {
+      const data = Object.fromEntries(new FormData(form).entries());
+      const res = await fetch('https://formsubmit.co/ajax/khan.farhan83@gmail.com', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          ...data,
+          _subject: data.subject
+            ? `Portfolio contact: ${data.subject}`
+            : 'New message from your portfolio website',
+          _template: 'table',
+        }),
+      });
+      if (!res.ok) throw new Error('Request failed');
+      setFormStatus('sent');
+      form.reset();
+    } catch (err) {
+      setFormStatus('error');
+    }
   };
 
   return (
@@ -258,7 +354,7 @@ export default function HomePage() {
       <nav className="site-nav">
         <div className="container nav-inner">
           <a href="#home" className="logo">
-            Farhan Khan
+            <span className="accent">F</span>arhan <span className="accent">K</span>han
           </a>
           <button
             type="button"
@@ -305,18 +401,19 @@ export default function HomePage() {
               AI-powered workflows and vibe coding. I also lead development teams, manage
               projects, and drive technical excellence.
             </p>
-            <div className="hero-actions">
-              <a href="/resume.pdf" className="btn btn-primary" download>
-                Download Resume
-                <Icon path={icons.download} size={18} />
-              </a>
-              <a href="#contact" className="btn btn-ghost">
-                Contact Me
-              </a>
-            </div>
+            <a href="#about" className="scroll-indicator" aria-label="Scroll down to About section">
+              <span className="mouse">
+                <span className="wheel" />
+              </span>
+              <span className="chevrons" aria-hidden="true">
+                <span />
+                <span />
+              </span>
+              <span className="scroll-text">Learn More</span>
+            </a>
             <div className="social-row">
               {socials.map((social) => (
-                <a key={social.label} href={social.href} aria-label={social.label}>
+                <a key={social.label} href={social.href} aria-label={social.label} target="_blank" rel="noreferrer">
                   <Icon path={icons[social.icon]} size={19} />
                 </a>
               ))}
@@ -400,27 +497,21 @@ export default function HomePage() {
           <div className="resume-grid">
             <div className="resume-col reveal reveal-left">
               <h3>Education</h3>
-              <div className="timeline">
-                {education.map((item) => (
-                  <div key={item.title} className="timeline-item">
-                    <h4>{item.title}</h4>
-                    <p className="tl-sub">{item.sub}</p>
-                    {item.text ? <p>{item.text}</p> : null}
-                  </div>
-                ))}
-              </div>
+              <TimelineAccordion
+                items={education}
+                idPrefix="edu"
+                open={openEdu}
+                onToggle={setOpenEdu}
+              />
             </div>
             <div className="resume-col reveal reveal-right" style={{ '--d': '0.12s' }}>
               <h3>Experience</h3>
-              <div className="timeline">
-                {experience.map((item) => (
-                  <div key={item.title} className="timeline-item">
-                    <h4>{item.title}</h4>
-                    <p className="tl-sub">{item.sub}</p>
-                    {item.text ? <p>{item.text}</p> : null}
-                  </div>
-                ))}
-              </div>
+              <TimelineAccordion
+                items={experience}
+                idPrefix="exp"
+                open={openExp}
+                onToggle={setOpenExp}
+              />
             </div>
           </div>
         </div>
@@ -440,8 +531,8 @@ export default function HomePage() {
                 className="skill-card reveal"
                 style={{ '--d': `${(i % 5) * 0.08}s` }}
               >
-                <span className="skill-icon" style={{ background: skill.color }}>
-                  {skill.glyph}
+                <span className="skill-icon">
+                  <img src={skill.image} alt="" loading="lazy" />
                 </span>
                 <p>{skill.name}</p>
               </div>
@@ -502,7 +593,7 @@ export default function HomePage() {
             </ul>
             <div className="social-row">
               {socials.map((social) => (
-                <a key={social.label} href={social.href} aria-label={social.label}>
+                <a key={social.label} href={social.href} aria-label={social.label} target="_blank" rel="noreferrer">
                   <Icon path={icons[social.icon]} size={19} />
                 </a>
               ))}
@@ -535,14 +626,19 @@ export default function HomePage() {
               <textarea id="message" name="message" placeholder="Tell me about your project..." required />
             </div>
             <div>
-              <button type="submit" className="btn btn-primary">
-                Send Message
+              <button type="submit" className="btn btn-primary" disabled={formStatus === 'sending'}>
+                {formStatus === 'sending' ? 'Sending...' : 'Send Message'}
                 <Icon path={icons.send} size={17} />
               </button>
             </div>
-            {sent ? (
+            {formStatus === 'sent' ? (
               <p className="form-sent" role="status">
-                Thanks! Your message has been noted — I&apos;ll get back to you soon.
+                Thanks! Your message has been sent — I&apos;ll get back to you soon.
+              </p>
+            ) : null}
+            {formStatus === 'error' ? (
+              <p className="form-sent form-error" role="status">
+                Sorry, something went wrong. Please email me directly at khan.farhan83@gmail.com.
               </p>
             ) : null}
           </form>
