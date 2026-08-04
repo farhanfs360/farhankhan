@@ -1,9 +1,9 @@
 import './globals.css';
 
 export const metadata = {
-  title: 'Farhan Khan | Web Developer',
+  title: 'Farhan Khan | Senior Level Web Developer',
   description:
-    'Portfolio of Farhan Khan — Web Developer with 16+ years of experience, 500+ completed projects and 200+ clients.',
+    'Portfolio of Farhan Khan — Senior Level Web Developer specializing in WordPress, Shopify, and modern web technologies. 15+ years of experience building fast, scalable, user-friendly websites.',
 };
 
 export default function RootLayout({ children }) {
