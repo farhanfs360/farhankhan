@@ -354,7 +354,7 @@ export default function HomePage() {
       <nav className="site-nav">
         <div className="container nav-inner">
           <a href="#home" className="logo">
-            <span className="accent">F</span>arhan <span className="accent">K</span>han
+            <span className="accent">M</span>uhammad <span className="accent">F</span>arhan
           </a>
           <button
             type="button"
@@ -393,7 +393,7 @@ export default function HomePage() {
         <div className="container hero-grid">
           <div className="hero-copy reveal reveal-left">
             <p className="hero-hello">Hello, my name is</p>
-            <h1 className="hero-name">Farhan Khan</h1>
+            <h1 className="hero-name">Muhammad Farhan Khan</h1>
             <p className="hero-role">Senior Level Web Developer</p>
             <p className="hero-intro">
               I&apos;m a Web Developer specializing in WordPress, Shopify, and modern web
