@@ -97,7 +97,6 @@ const navLinks = [
   { label: 'Resume', href: '#resume' },
   { label: 'Skills', href: '#skills' },
   { label: 'Projects', href: '#projects' },
-  { label: 'Contact', href: '#contact' },
 ];
 
 const services = [
@@ -414,25 +413,23 @@ export default function HomePage() {
         });
       });
 
-      /* nav scroll-spy (Contact excluded — its nav link stays unhighlighted) */
-      navLinks
-        .filter((link) => link.href !== '#contact')
-        .forEach((link) => {
-          const section = document.querySelector(link.href);
-          const navEl = document.querySelector(`.nav-links a[href="${link.href}"]`);
-          if (!section || !navEl) return;
-          ScrollTrigger.create({
-            trigger: section,
-            start: 'top center',
-            end: 'bottom center',
-            onToggle: ({ isActive }) => {
-              if (isActive) {
-                document.querySelectorAll('.nav-links a').forEach((a) => a.classList.remove('active'));
-                navEl.classList.add('active');
-              }
-            },
-          });
+      /* nav scroll-spy */
+      navLinks.forEach((link) => {
+        const section = document.querySelector(link.href);
+        const navEl = document.querySelector(`.nav-links a[href="${link.href}"]`);
+        if (!section || !navEl) return;
+        ScrollTrigger.create({
+          trigger: section,
+          start: 'top center',
+          end: 'bottom center',
+          onToggle: ({ isActive }) => {
+            if (isActive) {
+              document.querySelectorAll('.nav-links a').forEach((a) => a.classList.remove('active'));
+              navEl.classList.add('active');
+            }
+          },
         });
+      });
     });
 
     return () => {
