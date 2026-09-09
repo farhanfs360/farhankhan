@@ -61,8 +61,6 @@ button {
 .reveal {
   opacity: 0;
   transform: translateY(26px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-  transition-delay: var(--d, 0s);
 }
 
 .reveal.reveal-left {
@@ -154,7 +152,22 @@ button {
 }
 
 .nav-links a {
+  position: relative;
   transition: color 0.2s ease;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
 }
 
 .nav-links a:hover,
@@ -164,6 +177,10 @@ button {
 
 .nav-links a.active {
   color: var(--accent);
+}
+
+.nav-links a.active::after {
+  transform: scaleX(1);
 }
 
 .btn {
@@ -187,7 +204,6 @@ button {
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
   box-shadow: 0 12px 30px var(--accent-glow);
 }
 
@@ -384,7 +400,6 @@ button {
 .social-row a:hover {
   border-color: var(--accent);
   color: var(--accent);
-  transform: translateY(-2px);
 }
 
 .hero-photo {
@@ -477,13 +492,16 @@ button {
   border-radius: var(--radius);
   padding: 34px 28px;
   text-align: center;
-  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .service-card:hover {
-  transform: translateY(-6px);
   border-color: var(--accent);
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+}
+
+.tilt {
+  will-change: transform;
 }
 
 .service-icon {
@@ -662,11 +680,10 @@ button {
   border-radius: var(--radius);
   padding: 26px 14px 20px;
   text-align: center;
-  transition: transform 0.25s ease, border-color 0.25s ease;
+  transition: border-color 0.25s ease;
 }
 
 .skill-card:hover {
-  transform: translateY(-5px);
   border-color: var(--accent);
 }
 
@@ -925,11 +942,6 @@ button {
   align-items: center;
   justify-content: center;
   box-shadow: 0 8px 20px var(--accent-glow);
-  transition: transform 0.2s ease;
-}
-
-.to-top:hover {
-  transform: translateY(-3px);
 }
 
 /* ---------- responsive ---------- */

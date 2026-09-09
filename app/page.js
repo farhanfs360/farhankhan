@@ -1,6 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 /* ---------- small inline icons ---------- */
 
@@ -301,26 +307,136 @@ export default function HomePage() {
   const [formStatus, setFormStatus] = useState('idle'); // idle | sending | sent | error
   const [openEdu, setOpenEdu] = useState(0);
   const [openExp, setOpenExp] = useState(0);
+  const heroCopyRef = useRef(null);
+  const heroPhotoRef = useRef(null);
 
   useEffect(() => {
-    const elements = document.querySelectorAll('.reveal');
-    if (!('IntersectionObserver' in window)) {
-      elements.forEach((el) => el.classList.add('in'));
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (reduceMotion) {
+      gsap.set('.reveal, .hero-copy > *, .hero-photo', { opacity: 1, x: 0, y: 0, clearProps: 'transform' });
       return;
     }
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('in');
-            observer.unobserve(entry.target);
-          }
+
+    const cleanupFns = [];
+    const ctx = gsap.context(() => {
+      /* hero entrance */
+      const heroItems = heroCopyRef.current.children;
+      gsap.set(heroItems, { opacity: 0, y: 24 });
+      gsap.set(heroPhotoRef.current, { opacity: 0, y: 20, scale: 0.92 });
+      gsap
+        .timeline({ delay: 0.15 })
+        .to(heroItems, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.12 })
+        .to(heroPhotoRef.current, { opacity: 1, y: 0, scale: 1, duration: 0.9, ease: 'power3.out' }, 0.25);
+
+      /* hero photo follows cursor */
+      const heroEl = document.querySelector('.hero');
+      const onHeroMove = (e) => {
+        const rect = heroEl.getBoundingClientRect();
+        const px = (e.clientX - rect.left) / rect.width - 0.5;
+        const py = (e.clientY - rect.top) / rect.height - 0.5;
+        gsap.to(heroPhotoRef.current, {
+          rotateY: px * 10,
+          rotateX: -py * 10,
+          transformPerspective: 600,
+          duration: 0.6,
+          ease: 'power2.out',
         });
-      },
-      { threshold: 0.12, rootMargin: '0px 0px -50px 0px' }
-    );
-    elements.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
+      };
+      const onHeroLeave = () =>
+        gsap.to(heroPhotoRef.current, { rotateX: 0, rotateY: 0, duration: 0.8, ease: 'power3.out' });
+      heroEl.addEventListener('mousemove', onHeroMove);
+      heroEl.addEventListener('mouseleave', onHeroLeave);
+      cleanupFns.push(() => {
+        heroEl.removeEventListener('mousemove', onHeroMove);
+        heroEl.removeEventListener('mouseleave', onHeroLeave);
+      });
+
+      /* scroll reveals */
+      gsap.utils.toArray('.reveal').forEach((el) => {
+        const x = el.classList.contains('reveal-left') ? -32 : el.classList.contains('reveal-right') ? 32 : 0;
+        const y = x === 0 ? 26 : 0;
+        gsap.set(el, { opacity: 0, x, y });
+      });
+      ScrollTrigger.batch('.reveal', {
+        start: 'top 88%',
+        once: true,
+        onEnter: (batch) =>
+          gsap.to(batch, {
+            opacity: 1,
+            x: 0,
+            y: 0,
+            duration: 0.9,
+            ease: 'power3.out',
+            stagger: 0.12,
+            overwrite: true,
+          }),
+      });
+
+      /* magnetic buttons & icons */
+      document.querySelectorAll('.magnetic').forEach((el) => {
+        const onMove = (e) => {
+          const rect = el.getBoundingClientRect();
+          const relX = e.clientX - rect.left - rect.width / 2;
+          const relY = e.clientY - rect.top - rect.height / 2;
+          gsap.to(el, { x: relX * 0.35, y: relY * 0.35, duration: 0.4, ease: 'power2.out' });
+        };
+        const onLeave = () => gsap.to(el, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.4)' });
+        el.addEventListener('mousemove', onMove);
+        el.addEventListener('mouseleave', onLeave);
+        cleanupFns.push(() => {
+          el.removeEventListener('mousemove', onMove);
+          el.removeEventListener('mouseleave', onLeave);
+        });
+      });
+
+      /* 3D tilt on cards */
+      document.querySelectorAll('.tilt').forEach((el) => {
+        const onMove = (e) => {
+          const rect = el.getBoundingClientRect();
+          const px = (e.clientX - rect.left) / rect.width - 0.5;
+          const py = (e.clientY - rect.top) / rect.height - 0.5;
+          gsap.to(el, {
+            rotateY: px * 14,
+            rotateX: -py * 14,
+            y: -6,
+            transformPerspective: 600,
+            duration: 0.4,
+            ease: 'power2.out',
+          });
+        };
+        const onLeave = () => gsap.to(el, { rotateX: 0, rotateY: 0, y: 0, duration: 0.6, ease: 'power3.out' });
+        el.addEventListener('mousemove', onMove);
+        el.addEventListener('mouseleave', onLeave);
+        cleanupFns.push(() => {
+          el.removeEventListener('mousemove', onMove);
+          el.removeEventListener('mouseleave', onLeave);
+        });
+      });
+
+      /* nav scroll-spy */
+      navLinks.forEach((link) => {
+        const section = document.querySelector(link.href);
+        const navEl = document.querySelector(`.nav-links a[href="${link.href}"]`);
+        if (!section || !navEl) return;
+        ScrollTrigger.create({
+          trigger: section,
+          start: 'top center',
+          end: 'bottom center',
+          onToggle: ({ isActive }) => {
+            if (isActive) {
+              document.querySelectorAll('.nav-links a').forEach((a) => a.classList.remove('active'));
+              navEl.classList.add('active');
+            }
+          },
+        });
+      });
+    });
+
+    return () => {
+      cleanupFns.forEach((fn) => fn());
+      ctx.revert();
+    };
   }, []);
 
   const handleSubmit = async (event) => {
@@ -381,7 +497,11 @@ export default function HomePage() {
                 {link.label}
               </a>
             ))}
-            <a href="#contact" className="btn btn-primary btn-sm" onClick={() => setMenuOpen(false)}>
+            <a
+              href="#contact"
+              className="btn btn-primary btn-sm magnetic"
+              onClick={() => setMenuOpen(false)}
+            >
               Hire Me
             </a>
           </div>
@@ -391,7 +511,7 @@ export default function HomePage() {
       {/* ---------- Hero ---------- */}
       <header className="hero">
         <div className="container hero-grid">
-          <div className="hero-copy reveal reveal-left">
+          <div className="hero-copy" ref={heroCopyRef}>
             <p className="hero-hello">Hello, my name is</p>
             <h1 className="hero-name">Muhammad Farhan Khan</h1>
             <p className="hero-role">Senior Level Web Developer</p>
@@ -413,14 +533,21 @@ export default function HomePage() {
             </a>
             <div className="social-row">
               {socials.map((social) => (
-                <a key={social.label} href={social.href} aria-label={social.label} target="_blank" rel="noreferrer">
+                <a
+                  key={social.label}
+                  href={social.href}
+                  aria-label={social.label}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="magnetic"
+                >
                   <Icon path={icons[social.icon]} size={19} />
                 </a>
               ))}
             </div>
           </div>
 
-          <div className="hero-photo reveal reveal-right" style={{ '--d': '0.15s' }}>
+          <div className="hero-photo" ref={heroPhotoRef}>
             <img src="/images/portrait.png" alt="Portrait of Farhan Khan" />
           </div>
         </div>
@@ -432,7 +559,7 @@ export default function HomePage() {
           <div className="about-photo reveal reveal-left">
             <img src="/images/about.png" alt="Farhan Khan at his workstation" />
           </div>
-          <div className="reveal reveal-right" style={{ '--d': '0.12s' }}>
+          <div className="reveal reveal-right">
             <p className="about-kicker">About Me</p>
             <h2>
               Driven, innovative
@@ -468,12 +595,8 @@ export default function HomePage() {
             </h2>
           </div>
           <div className="services-grid">
-            {services.map((service, i) => (
-              <div
-                key={service.title}
-                className="service-card reveal"
-                style={{ '--d': `${(i % 3) * 0.12}s` }}
-              >
+            {services.map((service) => (
+              <div key={service.title} className="service-card reveal tilt">
                 <span className="service-icon">
                   <Icon path={icons[service.icon]} size={28} />
                 </span>
@@ -504,7 +627,7 @@ export default function HomePage() {
                 onToggle={setOpenEdu}
               />
             </div>
-            <div className="resume-col reveal reveal-right" style={{ '--d': '0.12s' }}>
+            <div className="resume-col reveal reveal-right">
               <h3>Experience</h3>
               <TimelineAccordion
                 items={experience}
@@ -525,12 +648,8 @@ export default function HomePage() {
             <h2 className="section-title">Professional Skills</h2>
           </div>
           <div className="skills-grid">
-            {skills.map((skill, i) => (
-              <div
-                key={skill.name}
-                className="skill-card reveal"
-                style={{ '--d': `${(i % 5) * 0.08}s` }}
-              >
+            {skills.map((skill) => (
+              <div key={skill.name} className="skill-card reveal tilt">
                 <span className="skill-icon">
                   <img src={skill.image} alt="" loading="lazy" />
                 </span>
@@ -552,10 +671,10 @@ export default function HomePage() {
           </div>
           {projects.map((project, i) => (
             <div key={project.title} className={`project-row${i % 2 ? ' flip' : ''}`}>
-              <div className="project-media reveal reveal-left">
+              <div className="project-media reveal reveal-left tilt">
                 <img src={project.image} alt={`Screenshot of ${project.title}`} />
               </div>
-              <div className="project-info reveal reveal-right" style={{ '--d': '0.12s' }}>
+              <div className="project-info reveal reveal-right">
                 <p className="project-cat">{project.category}</p>
                 <h3>{project.title}</h3>
                 <p>{project.text}</p>
@@ -593,14 +712,21 @@ export default function HomePage() {
             </ul>
             <div className="social-row">
               {socials.map((social) => (
-                <a key={social.label} href={social.href} aria-label={social.label} target="_blank" rel="noreferrer">
+                <a
+                  key={social.label}
+                  href={social.href}
+                  aria-label={social.label}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="magnetic"
+                >
                   <Icon path={icons[social.icon]} size={19} />
                 </a>
               ))}
             </div>
           </div>
 
-          <form className="contact-form reveal reveal-right" style={{ '--d': '0.12s' }} onSubmit={handleSubmit}>
+          <form className="contact-form reveal reveal-right" onSubmit={handleSubmit}>
             <div className="form-row">
               <div className="field">
                 <label htmlFor="name">Full Name</label>
@@ -626,7 +752,11 @@ export default function HomePage() {
               <textarea id="message" name="message" placeholder="Tell me about your project..." required />
             </div>
             <div>
-              <button type="submit" className="btn btn-primary" disabled={formStatus === 'sending'}>
+              <button
+                type="submit"
+                className="btn btn-primary magnetic"
+                disabled={formStatus === 'sending'}
+              >
                 {formStatus === 'sending' ? 'Sending...' : 'Send Message'}
                 <Icon path={icons.send} size={17} />
               </button>
@@ -658,7 +788,7 @@ export default function HomePage() {
           </div>
           <button
             type="button"
-            className="to-top"
+            className="to-top magnetic"
             aria-label="Back to top"
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           >
