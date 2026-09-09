@@ -502,7 +502,7 @@ export default function HomePage() {
               className="btn btn-primary btn-sm magnetic"
               onClick={() => setMenuOpen(false)}
             >
-              Hire Me
+              Contact Me
             </a>
           </div>
         </div>
